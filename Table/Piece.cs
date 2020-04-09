@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace xadrez.Table
 {
     class Piece
     {
-        public int Line { get; set; }
-        public int Column { get; set; }
+        public Position Position { get; set; }
+        public Color Color { get; protected set; }
+        public GameTable GameTable { get; set; }
 
-        public Piece(int line, int column)
-        {
-            Line = line;
-            Column = column;
-        }
+
     }
 }
