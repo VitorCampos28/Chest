@@ -1,26 +1,24 @@
-﻿namespace xadrez.Table
+﻿using System;
+
+namespace xadrez.Table
+
 {
     class GameTable
     {
-        public Piece[,] Pieces { get; set; }
+        public int Lines { get; set; }
+        public int Columns { get; set; }
+        private  Piece[,] Pieces { get; set; }
 
-        public GameTable()
+        public GameTable(int lines, int columns)
         {
-
+            Lines = lines;
+            Columns = columns;
+            Pieces = new Piece[lines, columns];
         }
 
-        public void PrintTable(int line, int column )
+        public Piece piece(int line , int column)
         {
-            for (int i = 0; i < line; i++)
-            {
-                Console.Write(8 - i + " ");
-                for (int j = 0; j < column; j++)
-                {
-                    Console.Write("- ");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine("  A B C D E F G H");
+            return Pieces[line, column];
         }
 
     }

@@ -7,8 +7,8 @@ namespace xadrez
     {
         static void Main(string[] args)
         {
-            GameTable table = new GameTable();
-            table.PrintTable(8, 8);
+            GameTable table = new GameTable(8,8);
+            PlaceChessTable.placechess(table);
         }
     }
 }
