@@ -1,4 +1,5 @@
 ﻿using System;
+using xadrez.GameChess;
 
 namespace xadrez.Table
 {
@@ -42,6 +43,14 @@ namespace xadrez.Table
                 Console.Write(piece);
                 Console.ForegroundColor = aux;
             }
+        }
+
+        public static ChessPosition readChessPosition()
+        {
+            string s = Console.ReadLine();
+            char column = s[0];
+            int line = int.Parse(s[1] + "");
+            return new ChessPosition(column, line);
         }
     }
 }

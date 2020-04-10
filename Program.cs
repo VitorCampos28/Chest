@@ -10,16 +10,19 @@ namespace xadrez
         {
             try
             {
-                GameTable tab = new GameTable(8, 8);
+                ChessMatch match = new ChessMatch();
 
-                tab.placePiece(new Tower(tab, Color.Black), new Position(0, 0));
-                tab.placePiece(new Tower(tab, Color.Black), new Position(1, 3));
-                tab.placePiece(new King(tab, Color.Black), new Position(0, 2));
-                tab.placePiece(new King(tab, Color.White), new Position(3, 5));
-                tab.placePiece(new Tower(tab, Color.White), new Position(2, 6));
-                tab.placePiece(new Tower(tab, Color.White), new Position(3, 7));
+                while (!match.Over)
+                {
+                    Console.Clear();
+                    PlaceChessTable.placechess(match.GameTable);
+                    Console.Write("Start: ");
+                    Position start = PlaceChessTable.readChessPosition().toChessPosition();
+                    Console.Write("Over: ");
+                    Position over = PlaceChessTable.readChessPosition().toChessPosition();
+                    match.changePosition(start, over);
+                }
 
-                PlaceChessTable.placechess(tab);
             }
 
             catch (TableExceptions e)

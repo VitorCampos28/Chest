@@ -33,6 +33,17 @@ namespace xadrez.Table
             return piece(pos) != null;
 
         }
+        public Piece removePiece(Position pos)
+        {
+            if (piece(pos) == null)
+            {
+                return null;
+            }
+            Piece aux = piece(pos);
+            aux.Position = null;
+            Pieces[pos.Line, pos.Column] = null;
+            return aux;
+        }
         public void placePiece(Piece p , Position pos)
         {
             if (alreadyHavePiece(pos))
