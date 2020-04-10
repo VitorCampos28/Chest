@@ -21,5 +21,11 @@ namespace xadrez.Table
             return Pieces[line, column];
         }
 
+        public void placePiece(Piece p , Position pos)
+        {
+            Pieces[pos.Line, pos.Column] = p;
+            p.Position = pos;
+        }
+
     }
 }
