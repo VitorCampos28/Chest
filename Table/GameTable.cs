@@ -29,7 +29,7 @@ namespace xadrez.Table
         public bool alreadyHavePiece(Position pos)
         {
             
-            validPosition(pos);
+            ValidatingPosition(pos);
             return piece(pos) != null;
 
         }
@@ -58,12 +58,17 @@ namespace xadrez.Table
         {
             if (pos.Line < 0 || pos.Line>=Lines || pos.Column < 0 || pos.Column >= Columns)
             {
-                throw new TableExceptions("Invalid position! ");
+                return false;
             }
             return true;
         }
-
-
-
+        
+        public void  ValidatingPosition(Position pos)
+        {
+            if (!validPosition(pos))
+            {
+                throw new TableExceptions("Invalid Position");
+            }
+        }
     }
 }

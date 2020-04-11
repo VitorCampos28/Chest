@@ -11,6 +11,11 @@
             Column = column;
         }
 
+        public void changePosition(int line, int column)
+        {
+            Line = line;
+            Column = column;
+        }
         public override string ToString()
         {
             return Line + ", " + Column;

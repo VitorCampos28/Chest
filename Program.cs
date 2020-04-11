@@ -18,6 +18,10 @@ namespace xadrez
                     PlaceChessTable.placechess(match.GameTable);
                     Console.Write("Start: ");
                     Position start = PlaceChessTable.readChessPosition().toChessPosition();
+                    Console.WriteLine(start);
+                    bool[,] posibleMoves = match.GameTable.piece(start).MovePiece();
+                    Console.Clear();
+                    PlaceChessTable.placechess(match.GameTable, posibleMoves);
                     Console.Write("Over: ");
                     Position over = PlaceChessTable.readChessPosition().toChessPosition();
                     match.changePosition(start, over);

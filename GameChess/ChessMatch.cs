@@ -28,11 +28,17 @@ namespace xadrez.GameChess
         private void placePieceInGame()
         {
             GameTable.placePiece(new Tower(GameTable, Color.Black), new ChessPosition('c', 1).toChessPosition());
-            GameTable.placePiece(new Tower(GameTable, Color.Black), new Position(1, 3));
-            GameTable.placePiece(new King(GameTable, Color.Black), new Position(0, 2));
-            GameTable.placePiece(new King(GameTable, Color.White), new Position(3, 5));
-            GameTable.placePiece(new Tower(GameTable, Color.White), new Position(2, 6));
-            GameTable.placePiece(new Tower(GameTable, Color.White), new Position(3, 7));
+            GameTable.placePiece(new Tower(GameTable, Color.Black), new ChessPosition('c', 2).toChessPosition());
+            GameTable.placePiece(new Tower(GameTable, Color.Black), new ChessPosition('d', 2).toChessPosition());
+            GameTable.placePiece(new Tower(GameTable, Color.Black), new ChessPosition('e', 2).toChessPosition());
+            GameTable.placePiece(new Tower(GameTable, Color.Black), new ChessPosition('e', 1).toChessPosition());
+            GameTable.placePiece(new King(GameTable, Color.Black), new ChessPosition('d', 1).toChessPosition());
+            GameTable.placePiece(new Tower(GameTable, Color.White), new ChessPosition('c', 8).toChessPosition());
+            GameTable.placePiece(new Tower(GameTable, Color.White), new ChessPosition('c', 7).toChessPosition());
+            GameTable.placePiece(new Tower(GameTable, Color.White), new ChessPosition('d', 7).toChessPosition());
+            GameTable.placePiece(new Tower(GameTable, Color.White), new ChessPosition('e', 7).toChessPosition());
+            GameTable.placePiece(new Tower(GameTable, Color.White), new ChessPosition('e', 8).toChessPosition());
+            GameTable.placePiece(new King(GameTable, Color.White), new ChessPosition('d', 8).toChessPosition());
         }
     }
 }

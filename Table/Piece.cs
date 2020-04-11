@@ -1,7 +1,7 @@
 ﻿
 namespace xadrez.Table
 {
-    class Piece
+    abstract class Piece
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
@@ -20,5 +20,7 @@ namespace xadrez.Table
         {
             Moves++;
         }
+
+        public abstract bool[,] MovePiece();
     }
 }

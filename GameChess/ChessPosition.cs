@@ -19,7 +19,7 @@ namespace xadrez.GameChess
 
         public override string ToString()
         {
-            return "" + Line + Column;
+            return "" + Column + Line;
         }
     }
 }

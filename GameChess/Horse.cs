@@ -9,6 +9,11 @@ namespace xadrez.GameChess
 
         }
 
+        public override bool[,] MovePiece()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ToString()
         {
             return "H";
