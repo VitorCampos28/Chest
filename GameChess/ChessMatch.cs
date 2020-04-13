@@ -9,7 +9,10 @@ namespace xadrez.GameChess
         public Color Player { get; private set; }
         public bool Over { get; private set; }
         private HashSet<Piece> PiecesGame;
+
         private HashSet<Piece> PrisonPieces;
+
+        public bool Check { get; private set; }
 
         public ChessMatch()
         {
@@ -17,6 +20,7 @@ namespace xadrez.GameChess
             Turn = 1;
             Player = Color.White;
             Over = false;
+            Check = false;
             PiecesGame = new HashSet<Piece>();
             PrisonPieces = new HashSet<Piece>();
             placePieceInGame();            
@@ -49,7 +53,7 @@ namespace xadrez.GameChess
             return x;
         }
 
-        public void changePosition(Position start , Position over)
+        public Piece  changePosition(Position start , Position over)
         {
             Piece p = GameTable.removePiece(start);
             p.incrementMove();
@@ -59,6 +63,19 @@ namespace xadrez.GameChess
             {
                 PrisonPieces.Add(prisonPiece);
             }
+            return prisonPiece;
+        }
+
+        public void cancelMoviment(Position start, Position over , Piece prisonPiece)
+        {
+            Piece p = GameTable.removePiece(over);
+            p.DecrementMove();
+            if (prisonPiece != null)
+            {
+                GameTable.placePiece(prisonPiece, over);
+                PrisonPieces.Remove(prisonPiece);
+            }
+            GameTable.placePiece(p, start);
         }
 
         public void validPosition(Position pos)
@@ -75,6 +92,7 @@ namespace xadrez.GameChess
             {
                 throw new TableExceptions("This piece is stuck");
             }
+            
         }
 
         public void validoOverPosition(Position start , Position over )
@@ -87,7 +105,23 @@ namespace xadrez.GameChess
 
         public void makePlay(Position start , Position over)
         {
-            changePosition(start, over);
+            Piece prisonPiece = changePosition(start, over);
+
+            if (inCheck(Player))
+            {
+                cancelMoviment(start , over , prisonPiece);
+                throw new TableExceptions("Your king is in check");
+            }
+
+            if (inCheck(enemy(Player)))
+            {
+                Check = true;
+            }
+            else
+            {
+                Check = false;
+            }
+
             Turn++;
             changePlayer();
         }
@@ -108,6 +142,48 @@ namespace xadrez.GameChess
         {
             GameTable.placePiece(p, new ChessPosition(column, line).toChessPosition());
             PiecesGame.Add(p);
+        }
+
+        private Color enemy (Color color)
+        {
+            if (color == Color.White)
+            {
+                return Color.Black;
+            }
+            else
+            {
+                return Color.White;
+            }
+        }
+
+        private Piece king (Color color)
+        {
+            foreach (Piece x in piecesInGame(color))
+            {
+                if ( x is King)
+                {
+                    return x;
+                }
+            }
+            return null; 
+        }
+
+        public bool inCheck(Color color)
+        {
+            Piece K = king(color);
+            if (K == null)
+            {
+                throw new TableExceptions("Dont have a " + color + "king in table");
+            }
+            foreach (Piece x in piecesInGame(enemy(color)))
+            {
+                bool[,] mat = x.MovePiece();
+                if (mat[K.Position.Line , K.Position.Column])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void placePieceInGame()

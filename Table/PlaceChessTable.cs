@@ -15,6 +15,12 @@ namespace xadrez.Table
             Console.WriteLine();
             Console.WriteLine("Turn :" + match.Turn);
             Console.WriteLine("Waiting Play :" + match.Player);
+            if (match.Check)
+            {
+                Console.WriteLine("Check!");
+            }
+            Console.WriteLine();
+
         }
 
         public static void showPrisonPieces(ChessMatch match)

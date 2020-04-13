@@ -20,6 +20,10 @@ namespace xadrez.Table
         {
             Moves++;
         }
+        public void DecrementMove()
+        {
+            Moves--;
+        }
 
         public bool possiblemoves()
         {

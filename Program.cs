@@ -32,6 +32,7 @@ namespace xadrez
                     catch (TableExceptions e)
                     {
                         Console.WriteLine(e.Message);
+                        Console.ReadLine();
                     }
                 }
 
