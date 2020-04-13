@@ -1,10 +1,42 @@
 ﻿using System;
+using System.Collections.Generic;
 using xadrez.GameChess;
 
 namespace xadrez.Table
 {
     class PlaceChessTable
     {
+
+        public static void startMatch(ChessMatch match)
+        {
+            PlaceChessTable.placechess(match.GameTable);
+            Console.WriteLine();
+            showPrisonPieces(match);
+            Console.WriteLine();
+            Console.WriteLine("Turn :" + match.Turn);
+            Console.WriteLine("Waiting Play :" + match.Player);
+        }
+
+        public static void showPrisonPieces(ChessMatch match)
+        {
+            Console.WriteLine("Captured pieces: ");
+            Console.Write("White: ");
+            showConjunt(match.capturedPieces(Color.White));
+            Console.WriteLine();
+            Console.Write("Black: ");
+            showConjunt(match.capturedPieces(Color.Black));
+            Console.WriteLine();
+        }
+
+        public static void showConjunt(HashSet<Piece> conjunt)
+        {
+            Console.Write("[");
+            foreach(Piece obj in conjunt)
+            {
+                Console.Write( obj + " ");
+            }
+            Console.Write("]");
+        }
         public static void placechess(GameTable gametable)
         {
 

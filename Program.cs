@@ -17,10 +17,7 @@ namespace xadrez
                     try
                     {
                         Console.Clear();
-                        PlaceChessTable.placechess(match.GameTable);
-                        Console.WriteLine();
-                        Console.WriteLine("Turn :" + match.Turn);
-                        Console.WriteLine("Waiting Play :" + match.Player);
+                        PlaceChessTable.startMatch(match);
                         Console.Write("Start: ");
                         Position start = PlaceChessTable.readChessPosition().toChessPosition();
                         match.validPosition(start);
@@ -35,7 +32,6 @@ namespace xadrez
                     catch (TableExceptions e)
                     {
                         Console.WriteLine(e.Message);
-                        Console.ReadLine();
                     }
                 }
 

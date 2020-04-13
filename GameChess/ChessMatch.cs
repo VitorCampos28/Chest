@@ -1,4 +1,5 @@
 ﻿using xadrez.Table;
+using System.Collections.Generic;
 namespace xadrez.GameChess
 {
     class ChessMatch
@@ -7,6 +8,8 @@ namespace xadrez.GameChess
         public int Turn { get; private set; }
         public Color Player { get; private set; }
         public bool Over { get; private set; }
+        private HashSet<Piece> PiecesGame;
+        private HashSet<Piece> PrisonPieces;
 
         public ChessMatch()
         {
@@ -14,7 +17,36 @@ namespace xadrez.GameChess
             Turn = 1;
             Player = Color.White;
             Over = false;
+            PiecesGame = new HashSet<Piece>();
+            PrisonPieces = new HashSet<Piece>();
             placePieceInGame();            
+        }
+
+        public HashSet<Piece> capturedPieces(Color color)
+        {
+            HashSet<Piece> x = new HashSet<Piece>();
+            foreach (Piece obj in PrisonPieces)
+            {
+                if (obj.Color == color)
+                {
+                    x.Add(obj);
+                }
+            }
+            return x;
+        }
+
+        public HashSet<Piece> piecesInGame(Color color)
+        {
+            HashSet<Piece> x = new HashSet<Piece>();
+            foreach (Piece obj in PiecesGame)
+            {
+                if (obj.Color == color)
+                {
+                    x.Add(obj);
+                }
+            }
+            x.ExceptWith(capturedPieces(color));
+            return x;
         }
 
         public void changePosition(Position start , Position over)
@@ -23,6 +55,10 @@ namespace xadrez.GameChess
             p.incrementMove();
             Piece prisonPiece = GameTable.removePiece(over);
             GameTable.placePiece(p, over);
+            if (prisonPiece != null)
+            {
+                PrisonPieces.Add(prisonPiece);
+            }
         }
 
         public void validPosition(Position pos)
@@ -68,20 +104,26 @@ namespace xadrez.GameChess
             }
         }
 
+        public void placeNewPiece(char column , int line , Piece p)
+        {
+            GameTable.placePiece(p, new ChessPosition(column, line).toChessPosition());
+            PiecesGame.Add(p);
+        }
+
         private void placePieceInGame()
         {
-            GameTable.placePiece(new Tower(GameTable, Color.Black), new ChessPosition('c', 1).toChessPosition());
-            GameTable.placePiece(new Tower(GameTable, Color.Black), new ChessPosition('c', 2).toChessPosition());
-            GameTable.placePiece(new Tower(GameTable, Color.Black), new ChessPosition('d', 2).toChessPosition());
-            GameTable.placePiece(new Tower(GameTable, Color.Black), new ChessPosition('e', 2).toChessPosition());
-            GameTable.placePiece(new Tower(GameTable, Color.Black), new ChessPosition('e', 1).toChessPosition());
-            GameTable.placePiece(new King(GameTable, Color.Black), new ChessPosition('d', 1).toChessPosition());
-            GameTable.placePiece(new Tower(GameTable, Color.White), new ChessPosition('c', 8).toChessPosition());
-            GameTable.placePiece(new Tower(GameTable, Color.White), new ChessPosition('c', 7).toChessPosition());
-            GameTable.placePiece(new Tower(GameTable, Color.White), new ChessPosition('d', 7).toChessPosition());
-            GameTable.placePiece(new Tower(GameTable, Color.White), new ChessPosition('e', 7).toChessPosition());
-            GameTable.placePiece(new Tower(GameTable, Color.White), new ChessPosition('e', 8).toChessPosition());
-            GameTable.placePiece(new King(GameTable, Color.White), new ChessPosition('d', 8).toChessPosition());
+            placeNewPiece('c', 1, new Tower(GameTable, Color.White));
+            placeNewPiece('c' , 2 , new Tower(GameTable, Color.White));
+            placeNewPiece('d' , 2 , new Tower(GameTable, Color.White));
+            placeNewPiece('e' , 2 , new Tower(GameTable, Color.White));
+            placeNewPiece('e' , 1, new Tower(GameTable, Color.White));
+            placeNewPiece('d' , 1 , new King(GameTable, Color.White));
+            placeNewPiece('d' , 8 , new King(GameTable, Color.Black));
+            placeNewPiece('c' , 7 , new Tower(GameTable, Color.Black));
+            placeNewPiece('d' , 7 , new Tower(GameTable, Color.Black));
+            placeNewPiece('e' , 7 , new Tower(GameTable, Color.Black));
+            placeNewPiece('e' , 8 , new Tower(GameTable, Color.Black));
+            placeNewPiece('c', 8, new Tower(GameTable, Color.Black));
         }
     }
 }
