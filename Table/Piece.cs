@@ -21,6 +21,27 @@ namespace xadrez.Table
             Moves++;
         }
 
+        public bool possiblemoves()
+        {
+            bool[,] math = MovePiece();
+            for (int i = 0; i < GameTable.Lines; i++)
+            {
+                for ( int j = 0; j < GameTable.Columns; j++)
+                {
+                    if (math[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool possibleOverMove(Position pos)
+        {
+            return MovePiece()[pos.Line, pos.Column];
+        }
+
         public abstract bool[,] MovePiece();
     }
 }

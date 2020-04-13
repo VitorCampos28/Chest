@@ -4,14 +4,14 @@ namespace xadrez.GameChess
     class ChessMatch
     {
         public GameTable GameTable { get; private set; }
-        private int turn;
-        private Color Player;
+        public int Turn { get; private set; }
+        public Color Player { get; private set; }
         public bool Over { get; private set; }
 
         public ChessMatch()
         {
             GameTable = new GameTable(8, 8);
-            turn = 1;
+            Turn = 1;
             Player = Color.White;
             Over = false;
             placePieceInGame();            
@@ -23,6 +23,49 @@ namespace xadrez.GameChess
             p.incrementMove();
             Piece prisonPiece = GameTable.removePiece(over);
             GameTable.placePiece(p, over);
+        }
+
+        public void validPosition(Position pos)
+        {
+            if (GameTable.piece(pos) == null)
+            {
+                throw new TableExceptions("Has no valid Piece");
+            }
+            if (Player != GameTable.piece(pos).Color)
+            {
+                throw new TableExceptions("Not is your turn ");
+            }
+            if (!GameTable.piece(pos).possiblemoves())
+            {
+                throw new TableExceptions("This piece is stuck");
+            }
+        }
+
+        public void validoOverPosition(Position start , Position over )
+        {
+            if (!GameTable.piece(start).possibleOverMove(over))
+            {
+                throw new TableExceptions("Ivalid Movement");
+            }
+        }
+
+        public void makePlay(Position start , Position over)
+        {
+            changePosition(start, over);
+            Turn++;
+            changePlayer();
+        }
+
+        private void changePlayer()
+        {
+            if (Player == Color.White)
+            {
+                Player = Color.Black;
+            }
+            else
+            {
+                Player = Color.White;
+            }
         }
 
         private void placePieceInGame()
