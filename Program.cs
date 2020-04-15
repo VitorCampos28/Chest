@@ -35,6 +35,8 @@ namespace xadrez
                         Console.ReadLine();
                     }
                 }
+                Console.Clear();
+                PlaceChessTable.startMatch(match);
 
             }
 

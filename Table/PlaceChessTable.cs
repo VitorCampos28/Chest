@@ -14,12 +14,21 @@ namespace xadrez.Table
             showPrisonPieces(match);
             Console.WriteLine();
             Console.WriteLine("Turn :" + match.Turn);
-            Console.WriteLine("Waiting Play :" + match.Player);
-            if (match.Check)
+            if (!match.Over)
             {
-                Console.WriteLine("Check!");
+                Console.WriteLine("Waiting Play :" + match.Player);
+                if (match.Check)
+                {
+                    Console.WriteLine("Check!");
+                }
+                Console.WriteLine();
             }
-            Console.WriteLine();
+            else
+            {
+                Console.WriteLine("XequeMate");
+                Console.WriteLine("Vencedor: " + match.Player);
+                Console.ReadLine();
+            }
 
         }
 

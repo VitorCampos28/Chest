@@ -122,8 +122,15 @@ namespace xadrez.GameChess
                 Check = false;
             }
 
-            Turn++;
-            changePlayer();
+            if (checkMate(enemy(Player)))
+            {
+                Over = true;
+            }
+            else
+            {
+                Turn++;
+                changePlayer();
+            }
         }
 
         private void changePlayer()
@@ -184,6 +191,38 @@ namespace xadrez.GameChess
                 }
             }
             return false;
+        }
+
+        public bool checkMate(Color color)
+        {
+            if (!inCheck(color))
+            {
+                return false;
+            }
+
+            foreach (Piece x in piecesInGame(color))
+            {
+                bool[,] mat = x.MovePiece();
+                for (int i = 0; i < GameTable.Lines; i++)
+                {
+                    for ( int j = 0; j < GameTable.Columns; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Position start = x.Position;
+                            Position over = new Position(i, j);
+                            Piece prisonPiece = changePosition(start, over);
+                            bool Check = inCheck(color);
+                            cancelMoviment(start, over, prisonPiece);
+                            if (!Check)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         private void placePieceInGame()
