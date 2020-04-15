@@ -11,7 +11,7 @@ namespace xadrez.GameChess
 
         public override string ToString()
         {
-            return "R";
+            return "K";
         }
 
         private bool canMove(Position pos)
@@ -66,7 +66,7 @@ namespace xadrez.GameChess
                 mat[pos.Line, pos.Column] = true;
             }
             //SW
-            pos.changePosition(Position.Line + 1, Position.Column - 1);
+            pos.changePosition(Position.Line + 1, Position.Column -  1);
             if (GameTable.validPosition(pos) && canMove(pos))
             {
                 mat[pos.Line, pos.Column] = true;
